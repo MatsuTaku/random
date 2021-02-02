@@ -5,7 +5,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-static uint64_t size = 1ull << 5;
+static uint64_t size = 1ull << 7;
 static int k = 5;
 using namespace std;
 std::vector<int> B_ = {5,-9,7};//ビットシフトパターン
@@ -33,26 +33,26 @@ uint64_t hash_os(uint64_t x){
 
 
 int main(){
-	vector<uint64_t> a1(0);
-	vector<uint64_t> b1(0);
+	vector<uint64_t> xorshift(0);
+	vector<uint64_t> hash_num(0);
 	for(uint64_t i = 1; i <= size;i++){
 		uint64_t a = xos(i);
 		uint64_t b = hash_os(i);
-		a1.push_back(a);
-		b1.push_back(b);
+		xorshift.push_back(a);
+		hash_num.push_back(b);
 	}
-	sort(a1.begin(),a1.end());
-	sort(b1.begin(),b1.end());
+	sort(xorshift.begin(),xorshift.end());
+	sort(hash_num.begin(),hash_num.end());
     ofstream log;
     log.open("xos.csv",ios::trunc);
     for(int i = 0; i < size;i++){
-        log << a1[i];
+        log << xorshift[i];
         log << "\n";
     }
     log.close(); // これで保存終了
     log.open("hash.csv",ios::trunc);
     for(int i = 0; i < size;i++){
-        log << b1[i];
+        log << hash_num[i];
         log << "\n";
     }
     log.close(); // これで保存終了
