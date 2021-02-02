@@ -5,13 +5,13 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-static uint64_t size = 1ull << 7;
-static int k = 5;
+static uint64_t size = 1ull << 20;
+static int k = 20;
 using namespace std;
 std::vector<int> B_ = {5,-9,7};//ビットシフトパターン
 
 uint64_t xos(uint64_t x){//前&x
-    uint64_t maskXos_ = 1ull << k;
+    uint64_t maskXos_ = 1ull << k + 8;
 	for(int b: B_){
 		if(b >= 0){
 			x = (x ^ (x << b)) % maskXos_;
@@ -38,7 +38,7 @@ int main(){
 	for(uint64_t i = 1; i <= size;i++){
 		uint64_t a = xos(i);
 		uint64_t b = hash_os(i);
-		xorshift.push_back(a);
+		xorshift.push_back(( a >> 8));
 		hash_num.push_back(b);
 	}
 	sort(xorshift.begin(),xorshift.end());
